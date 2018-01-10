@@ -1,0 +1,95 @@
+<idea-plugin version="1">
+  <id>checkio.pycharm.plugin</id>
+  <name>CheckiO plugin for PyCharm Edu</name>
+  <version>1.0.14</version>
+  <vendor url="https://www.jetbrains.com">JetBrains</vendor>
+
+  <description><![CDATA[
+      CheckiO plugin for PyCharm Educational.
+      <br>
+      <b>Requires Oracle <a href="http://www.oracle.com/technetwork/java/javase/downloads/jre8-downloads-2133155.html">Java 8</a></b>
+      <br>
+      <br>
+       <a href="http://evgraph.github.io/CheckIOPyCharmPlugin">Plugin's page</a>
+
+    ]]>
+  </description>
+
+  <change-notes><![CDATA[
+    ]]>
+  </change-notes>
+
+  <depends>com.intellij.modules.lang</depends>
+  <depends>com.intellij.modules.python</depends>
+  <depends>com.intellij.modules.platform</depends>
+  <depends>com.jetbrains.edu.interactivelearning</depends>
+  <depends>com.jetbrains.python.edu.interactivelearning.python</depends>
+  <!-- please see http://confluence.jetbrains.com/display/IDEADEV/Build+Number+Ranges for description -->
+  <idea-version since-build="162.1729" until-build="163.*"/>
+
+  <!-- please see http://confluence.jetbrains.com/display/IDEADEV/Plugin+Compatibility+with+IntelliJ+Platform+Products
+       on how to target different products -->
+  <!-- uncomment to enable plugin in all products
+  <depends>com.intellij.modules.lang</depends>
+  -->
+
+
+  <extensions defaultExtensionNs="com.intellij">
+    <directoryProjectGenerator implementation="com.jetbrains.checkio.courseGeneration.CheckIOProjectGenerator"/>
+    <toolWindow id="Task Info" anchor="right" factoryClass="com.jetbrains.checkio.ui.CheckIOTaskToolWindowFactory"
+                conditionClass="com.jetbrains.edu.learning.ui.StudyCondition"/>
+    <toolWindow id="User Info" anchor="left" factoryClass="com.jetbrains.checkio.ui.CheckIOUserInfoToolWindowFactory"
+                conditionClass="com.jetbrains.edu.learning.ui.StudyCondition"/>
+    <applicationConfigurable instance="com.jetbrains.checkio.settings.CheckIOSettingsConfigurable"/>
+
+    <!--<projectService serviceInterface="com.jetbrains.edu.learning.StudyTaskManager" serviceImplementation="com.jetbrains.edu.learning.StudyTaskManager" />-->
+    <projectService serviceInterface="com.jetbrains.checkio.CheckIOTaskManager"
+                    serviceImplementation="com.jetbrains.checkio.CheckIOTaskManager"/>
+
+    <treeStructureProvider implementation="com.jetbrains.checkio.ui.CheckIOTreeStructureProvider"/>
+
+    <localInspection shortName="CheckIOInterpreterInspection" suppressId="CheckIOInterpreterInspection"
+                     bundle="properties.CheckIOBundle" key="Interpreter.mismatch" groupKey="INSP.GROUP.python"
+                     enabledByDefault="true" level="WARNING" implementationClass="com.jetbrains.checkio.CheckIOInterpreterInspection"/>
+
+    <applicationService serviceInterface="com.jetbrains.checkio.settings.CheckIOSettings" serviceImplementation="com.jetbrains.checkio.settings.CheckIOSettings">
+    </applicationService>
+
+  </extensions>
+
+
+
+  <application-components>
+    <!-- Add your application components here -->
+
+  </application-components>
+
+  <!--<project-components>-->
+  <!--&lt;!&ndash; Add your project components here &ndash;&gt;-->
+  <!--<component>-->
+  <!--<implementation-class>CheckIOProjectComponent</implementation-class>-->
+  <!--</component>-->
+  <!--</project-components>-->
+
+
+
+  <project-components>
+    <component>
+      <implementation-class>com.jetbrains.checkio.CheckIOProjectComponent</implementation-class>
+      <interface-class>com.jetbrains.checkio.CheckIOProjectComponent</interface-class>
+    </component>
+  </project-components>
+  <actions>
+    <action id="CheckIOUpdateProjectAction" class="com.jetbrains.checkio.actions.CheckIOUpdateProjectAction" text="Update project">
+    </action>
+    <action id="CheckIOCheckSolutionAction" class="com.jetbrains.checkio.actions.CheckIOCheckSolutionAction" text="Check mission"/>
+    <action class="com.jetbrains.checkio.actions.CheckIORefreshFileAction" id="CheckIORefreshTaskAction"/>
+    <action class="com.jetbrains.checkio.actions.CheckIOShowHintAction" id="CheckIOShowHintAction"/>
+    <action id="CheckIOShowSolutionsAction" class="com.jetbrains.checkio.actions.CheckIOShowPublicationsAction" text="ShowSolutionsAction"
+            description="Show solutions">
+      <keyboard-shortcut keymap="$default" first-keystroke="shift ctrl alt P"/>
+    </action>
+    <action id="CheckIoPublishSolutionAction" class="com.jetbrains.checkio.actions.CheckIoPublishSolutionAction"
+            text="CheckIoPublishSolutionAction"/>
+  </actions>
+</idea-plugin>

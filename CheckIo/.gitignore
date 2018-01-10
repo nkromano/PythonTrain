@@ -1,0 +1,10 @@
+*.class
+
+oauthData.properties
+*.war
+*.ear
+
+.idea/workspace.xml
+.DS
+out/
+*.DS_Store
